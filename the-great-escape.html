@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Detail — The Great Escape</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/EachMovie.css">
+  </head>
+  <body>
+    <div class="iphone-screen">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-title">Movies Ahoy!</div>
+        <div class="user-profile">
+          <span id="username">Username</span>
+          <span class="user-icon" id="userIcon"></span>
+        </div>
+      </div>
+
+      <!-- SCROLLABLE CONTENT -->
+      <div class="content">
+        <!-- POSTER -->
+        <div class="poster-container">
+          <img
+            src="images/Home/Movies/The-Great-Escape.jpg"
+            alt="The Great Escape Poster"
+          />
+        </div>
+
+        <!-- MOVIE INFO -->
+        <div class="movie-title">The Great Escape</div>
+        <div class="movie-genres">
+          <span class="genre-box">Action</span>
+          <span class="genre-box">Thriller</span>
+          <span class="genre-box">Crime</span>
+        </div>
+        <div class="movie-stats">
+          <div>R</div>
+          <div>★ 4.5/10</div>
+          <div>2h 10m</div>
+          <div>18M views</div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="description">
+          "A high-octane heist thriller where a team of hackers plan the
+          ultimate escape while the city races to stop them."
+        </div>
+
+        <!-- FRIENDS WHO WATCHED (DYNAMIC) -->
+        <div id="friendsWatchedContainer" class="friends-watched"></div>
+
+        <!-- CINEMAS / DAY SCHEDULE -->
+        <div class="day-schedule">
+          <!-- Cinema 1 -->
+          <div class="cinema">
+            <div class="cinema-name">Downtown Cinemas</div>
+            <!-- Location 1 -->
+            <div class="location">
+              <div class="location-header">
+                <span class="location-name">Main Hall</span>
+                <a href="Friends.html" class="location-link">Link</a>
+              </div>
+              <div class="hall">
+                <div class="hall-name">Hall A:</div>
+                <div class="hall-type-box">IMAX</div>
+                <div class="hall-type-box">ENG</div>
+                <div class="hall-type-box">CC</div>
+                <div class="showtimes">
+                  <div class="showtime-box">1:00PM</div>
+                  <div class="showtime-box">4:00PM</div>
+                  <div class="showtime-box">7:30PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cinema 2 -->
+          <div class="cinema">
+            <div class="cinema-name">Riverside Multiplex</div>
+            <div class="location">
+              <div class="location-header">
+                <span class="location-name">Screen 2</span>
+                <a href="Friends.html" class="location-link">Link</a>
+              </div>
+              <div class="hall">
+                <div class="hall-name">Hall 2:</div>
+                <div class="hall-type-box">2D</div>
+                <div class="hall-type-box">ENG</div>
+                <div class="hall-type-box">CC</div>
+                <div class="showtimes">
+                  <div class="showtime-box">2:30PM</div>
+                  <div class="showtime-box">5:30PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVIGATION BAR -->
+      <div class="navigation-bar">
+        <a href="Home.html" class="nav-item">
+          <img src="images/Navigation/home.png" class="icon" alt="Home" />
+          Home
+        </a>
+        <a href="Movies.html" class="nav-item">
+          <img src="images/Navigation/movies.png" class="icon" alt="Movies" />
+          Movies
+        </a>
+        <a href="Groups.html" class="nav-item">
+          <img src="images/Navigation/groups.png" class="icon" alt="Groups" />
+          Groups
+        </a>
+        <a href="Friends.html" class="nav-item">
+          <img src="images/Navigation/friends.png" class="icon" alt="Friends" />
+          Friends
+        </a>
+        <a href="Settings.html" class="nav-item">
+          <img src="images/Navigation/setting.png" class="icon" alt="Settings" />
+          Settings
+        </a>
+      </div>
+    </div>
+
+    <script>
+      const currentMovie = "The Great Escape";
+
+      const friendsData = [
+        {
+          username: "Alice",
+          movies: ["Inception", "Titanic", "Desert Dawn"],
+          avatar: "images/Avatars/alice.jpg",
+        },
+        {
+          username: "Bob",
+          movies: ["The Great Escape", "Desert Dawn"],
+          avatar: "images/Avatars/bob.jpg",
+        },
+        {
+          username: "Charlie",
+          movies: ["The Great Escape", "It"],
+          avatar: "images/Avatars/charlie.jpg",
+        },
+      ];
+
+      // FRIENDS WHO WATCHED
+      const friendsContainer = document.getElementById(
+        "friendsWatchedContainer"
+      );
+
+      const friendsWhoWatched = friendsData.filter((friend) =>
+        friend.movies.includes(currentMovie)
+      );
+
+      friendsWhoWatched.slice(0, 3).forEach((friend) => {
+        const img = document.createElement("img");
+        img.src = friend.avatar;
+        img.title = friend.username;
+        friendsContainer.appendChild(img);
+      });
+
+      if (friendsWhoWatched.length > 3) {
+        const moreSpan = document.createElement("span");
+        moreSpan.textContent = `+${friendsWhoWatched.length - 3} more`;
+        friendsContainer.appendChild(moreSpan);
+      }
+
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      if (!loggedInUser) {
+        window.location.href = "Login.html";
+      } else {
+        // Load username
+        const usernameEl = document.getElementById("username");
+        if (usernameEl) {
+          usernameEl.textContent = loggedInUser.fullName;
+        }
+
+        // Load profile picture
+        const userIcon = document.getElementById("userIcon");
+        if (userIcon && loggedInUser.pfp) {
+          userIcon.style.backgroundImage = `url(${loggedInUser.pfp})`;
+          userIcon.style.backgroundSize = "cover";
+          userIcon.style.backgroundPosition = "center";
+        }
+      }
+    </script>
+  </body>
+</html>

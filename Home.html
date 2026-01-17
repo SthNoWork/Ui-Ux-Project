@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies Ahoy! Home</title>
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/Home.css" />
+  </head>
+  <body>
+    <div class="iphone-screen">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-title">Movies Ahoy!</div>
+        <div class="user-profile">
+          <span id="username">Guest</span>
+          <span class="user-icon" id="userIcon"></span>
+        </div>
+      </div>
+
+      <!-- DEALS SECTION -->
+      <div class="deals-section">
+        <div class="deals-header">🏴‍☠️ Treasure Deals 🔥</div>
+        <div class="carousel-wrapper">
+          <button class="carousel-arrow carousel-prev" id="prevBtn">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <polyline points="15,18 9,12 15,6"></polyline>
+            </svg>
+          </button>
+          <div class="carousel-viewport">
+            <div class="carousel-track" id="carouselTrack">
+              <div class="carousel-slide">
+                <img src="images/Home/Deals/Banner1.jpg" alt="Deal 1" />
+              </div>
+              <div class="carousel-slide">
+                <img src="images/Home/Deals/Banner2.jpg" alt="Deal 2" />
+              </div>
+              <div class="carousel-slide">
+                <img src="images/Home/Deals/Banner3.jpg" alt="Deal 3" />
+              </div>
+            </div>
+          </div>
+          <button class="carousel-arrow carousel-next" id="nextBtn">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <polyline points="9,6 15,12 9,18"></polyline>
+            </svg>
+          </button>
+        </div>
+        <div class="carousel-dots" id="carouselDots">
+          <span class="dot active" data-index="0"></span>
+          <span class="dot" data-index="1"></span>
+          <span class="dot" data-index="2"></span>
+        </div>
+      </div>
+
+      <div class="popular-section" id="popularMovies">
+        <h2 class="popular-header">Popular</h2>
+
+        <a href="snow-white.html" style="text-decoration: none; color: inherit">
+          <div class="movie-card">
+            <div class="movie-poster">
+              <img src="images/Home/Movies/Snow-White.jpg" />
+            </div>
+            <div class="movie-details">
+              <h3>Snow White</h3>
+              <p>Classic fairy tale reimagined for the modern audience.</p>
+              <div class="stats">Views: 25M ★ 2.2/10</div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="the-great-escape.html"
+          style="text-decoration: none; color: inherit"
+        >
+          <div class="movie-card">
+            <div class="movie-poster">
+              <img src="images/Home/Movies/The-Great-Escape.jpg" />
+            </div>
+            <div class="movie-details">
+              <h3>The Great Escape</h3>
+              <p>Action thriller with hackers planning the ultimate heist.</p>
+              <div class="stats">Views: 18M ★ 4.5/10</div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="desert-dawn.html"
+          style="text-decoration: none; color: inherit"
+        >
+          <div class="movie-card">
+            <div class="movie-poster">
+              <img src="images/Home/Movies/Desert-Dawn.jpg" />
+            </div>
+            <div class="movie-details">
+              <h3>Desert Dawn</h3>
+              <p>Drama set in a vast desert exploring survival and hope.</p>
+              <div class="stats">Views: 12M ★ 4.1/10</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- NAVIGATION BAR -->
+      <div class="navigation-bar">
+        <a href="Home.html" class="nav-item">
+          <img src="images/Navigation/home.png" class="icon" />
+          Home
+        </a>
+        <a href="Movies.html" class="nav-item">
+          <img src="images/Navigation/movies.png" class="icon" />
+          Movies
+        </a>
+        <a href="Groups.html" class="nav-item">
+          <img src="images/Navigation/groups.png" class="icon" />
+          Groups
+        </a>
+        <a href="Friends.html" class="nav-item">
+          <img src="images/Navigation/friends.png" class="icon" />
+          Friends
+        </a>
+        <a href="Settings.html" class="nav-item">
+          <img src="images/Navigation/setting.png" class="icon" />
+          Settings
+        </a>
+      </div>
+    </div>
+
+    <script>
+      const track = document.getElementById("carouselTrack");
+      const slides = document.querySelectorAll(".carousel-slide");
+      const dots = document.querySelectorAll(".dot");
+      const totalSlides = slides.length;
+      let currentIndex = 0;
+      let autoSlideInterval;
+      const AUTO_SLIDE_DELAY = 5000;
+
+      function getSlideWidth() {
+        const viewport = document.querySelector(".carousel-viewport");
+        return viewport ? viewport.getBoundingClientRect().width : 0;
+      }
+
+      function updateCarousel(smooth = true) {
+        const slideWidth = getSlideWidth();
+
+        if (smooth) {
+          track.style.transition =
+            "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)";
+        } else {
+          track.style.transition = "none";
+        }
+        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === currentIndex);
+        });
+
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === currentIndex);
+        });
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateCarousel();
+      }
+
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateCarousel();
+      }
+
+      function goToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+      }
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        nextSlide();
+        resetAutoSlide();
+      });
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        prevSlide();
+        resetAutoSlide();
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          goToSlide(parseInt(dot.dataset.index));
+          resetAutoSlide();
+        });
+      });
+
+      function startAutoSlide() {
+        autoSlideInterval = setInterval(nextSlide, AUTO_SLIDE_DELAY);
+      }
+
+      function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+      }
+
+      const carouselWrapper = document.querySelector(".carousel-wrapper");
+      carouselWrapper.addEventListener("mouseenter", () =>
+        clearInterval(autoSlideInterval),
+      );
+      carouselWrapper.addEventListener("mouseleave", startAutoSlide);
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      carouselWrapper.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        },
+        { passive: true },
+      );
+
+      carouselWrapper.addEventListener(
+        "touchend",
+        (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          const diff = touchStartX - touchEndX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+            resetAutoSlide();
+          }
+        },
+        { passive: true },
+      );
+
+      updateCarousel(false);
+      startAutoSlide();
+
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          updateCarousel(false);
+        }, 100);
+      });
+
+      window.addEventListener("orientationchange", () => {
+        setTimeout(() => updateCarousel(false), 200);
+      });
+    </script>
+  </body>
+</html>

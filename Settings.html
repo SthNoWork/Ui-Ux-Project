@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings - Movies Ahoy!</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/Settings.css">
+</head>
+<body>
+  <div class="iphone-screen">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-title">Movies Ahoy!</div>
+      <div class="user-profile">
+        <span id="username">Username</span>
+        <span class="user-icon" id="userIcon"></span>
+      </div>
+    </div>
+
+    <div class="settings-container">
+      <div class="profile-section">
+        <img id="pfpImg" class="pfp" src="" alt="Profile Picture" />
+        <div class="user-info" id="userName">Username</div>
+        <div class="user-info" id="userEmail">user@example.com</div>
+
+        <label class="input-label" for="pfpUpload">Change Profile Picture</label>
+        <input type="file" id="pfpUpload" accept="image/*" class="input-field" />
+
+        <button id="savePfp" class="btn">Save Picture</button>
+      </div>
+
+      <div class="other-settings">
+        <label class="input-label" for="changePassword">Change Password</label>
+        <input type="password" id="changePassword" class="input-field" placeholder="New Password" />
+
+        <button id="logoutBtn" class="btn">Logout</button>
+      </div>
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <div class="navigation-bar">
+      <a href="Home.html" class="nav-item">
+        <img src="images/Navigation/home.png" class="icon" />
+        Home
+      </a>
+      <a href="Movies.html" class="nav-item">
+        <img src="images/Navigation/movies.png" class="icon" />
+        Movies
+      </a>
+      <a href="Groups.html" class="nav-item">
+        <img src="images/Navigation/groups.png" class="icon" />
+        Groups
+      </a>
+      <a href="Friends.html" class="nav-item">
+        <img src="images/Navigation/friends.png" class="icon" />
+        Friends
+      </a>
+      <a href="Settings.html" class="nav-item">
+        <img src="images/Navigation/setting.png" class="icon" />
+        Settings
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Load logged-in user info
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser) {
+      window.location.href = "Login.html";
+    } else {
+      // page content fields
+      document.getElementById('userName').textContent = loggedInUser.fullName;
+      document.getElementById('userEmail').textContent = loggedInUser.email;
+      if (loggedInUser.pfp) {
+        document.getElementById('pfpImg').src = loggedInUser.pfp;
+      } else {
+        document.getElementById('pfpImg').src = ""; // default blank PFP
+      }
+
+      // header: keep consistent with Home.html
+      const headerUsername = document.getElementById('username');
+      if (headerUsername) headerUsername.textContent = loggedInUser.fullName;
+
+      const headerUserIcon = document.getElementById('userIcon');
+      if (headerUserIcon && loggedInUser.pfp) {
+        headerUserIcon.style.backgroundImage = `url(${loggedInUser.pfp})`;
+        headerUserIcon.style.backgroundSize = 'cover';
+        headerUserIcon.style.backgroundPosition = 'center';
+      }
+    }
+
+    // Save PFP to localStorage
+    const pfpUpload = document.getElementById('pfpUpload');
+    const savePfp = document.getElementById('savePfp');
+
+    pfpUpload.addEventListener('change', () => {
+      const file = pfpUpload.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('pfpImg').src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    savePfp.addEventListener('click', () => {
+      const imgSrc = document.getElementById('pfpImg').src;
+      loggedInUser.pfp = imgSrc;
+      localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+
+      // update header icon immediately
+      const headerUserIcon = document.getElementById('userIcon');
+      if (headerUserIcon) {
+        headerUserIcon.style.backgroundImage = `url(${imgSrc})`;
+        headerUserIcon.style.backgroundSize = 'cover';
+        headerUserIcon.style.backgroundPosition = 'center';
+      }
+
+      alert("Profile picture saved!");
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = "Login.html";
+    });
+  </script>
+</body>
+</html>

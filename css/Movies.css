@@ -1,0 +1,113 @@
+/* =========================================================
+   Movies.css – Pirate-Themed Movies Page
+   ========================================================= */
+
+/* SEARCH BAR */
+.search-container {
+  padding: 12px 15px;
+  flex-shrink: 0;
+}
+
+/* DAY SELECTOR */
+.day-selector {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  flex-shrink: 0;
+  gap: 4px;
+}
+
+.day {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  background: linear-gradient(180deg, var(--pirate-crimson) 0%, var(--pirate-maroon) 100%);
+  color: var(--pirate-sand);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85em;
+  transition: var(--transition-bounce);
+  border: 2px solid transparent;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.day:hover {
+  transform: translateY(-2px);
+  border-color: var(--pirate-gold);
+  box-shadow: var(--glow-gold);
+}
+
+.day.active {
+  background: linear-gradient(180deg, var(--pirate-gold) 0%, var(--pirate-dark-gold) 100%);
+  color: var(--pirate-maroon);
+  border-color: var(--pirate-wood);
+  box-shadow: var(--glow-gold);
+}
+
+/* MOVIE LIST */
+.movie-list {
+  flex-grow: 1;
+  padding: 10px 15px 80px;
+  overflow-y: auto;
+}
+
+.movie-card {
+  display: flex;
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.movie-poster {
+  width: 90px;
+  height: 135px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  overflow: hidden;
+  margin-right: 15px;
+  border: 2px solid var(--pirate-wood);
+  box-shadow: var(--shadow-soft);
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-smooth);
+}
+
+.movie-card:hover .movie-poster img {
+  transform: scale(1.05);
+}
+
+.movie-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie-details h3 {
+  margin: 0 0 5px;
+  color: var(--pirate-maroon);
+  font-size: 1.15em;
+  font-family: 'Georgia', serif;
+}
+
+.movie-details p {
+  margin: 0;
+  font-size: 0.85em;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movie-details .stats {
+  font-size: 0.9em;
+  font-weight: bold;
+  color: var(--pirate-gold);
+  margin-top: 8px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}

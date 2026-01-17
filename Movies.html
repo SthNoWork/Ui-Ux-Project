@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies Ahoy! (Weekly)</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/Movies.css">
+  </head>
+
+  <body>
+    <div class="iphone-screen">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-title">Movies Ahoy!</div>
+        <div class="user-profile">
+          <span id="username">Username</span>
+          <span class="user-icon" id="userIcon"></span>
+        </div>
+      </div>
+
+      <!-- SEARCH BAR -->
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search movies..."
+          id="searchInput"
+        />
+      </div>
+
+      <!-- DAY SELECTOR -->
+      <div class="day-selector" id="daySelector">
+        <div class="day active" data-day="Mon">Mon</div>
+        <div class="day" data-day="Tue">Tue</div>
+        <div class="day" data-day="Wed">Wed</div>
+        <div class="day" data-day="Thu">Thu</div>
+        <div class="day" data-day="Fri">Fri</div>
+        <div class="day" data-day="Sat">Sat</div>
+        <div class="day" data-day="Sun">Sun</div>
+      </div>
+
+      <!-- MOVIE LIST -->
+      <div class="movie-list" id="movieList"></div>
+
+      <!-- NAVIGATION BAR -->
+      <div class="navigation-bar">
+        <a href="Home.html" class="nav-item">
+          <img src="images/Navigation/home.png" class="icon" />
+          Home
+        </a>
+        <a href="Movies.html" class="nav-item">
+          <img src="images/Navigation/movies.png" class="icon" />
+          Movies
+        </a>
+        <a href="Groups.html" class="nav-item">
+          <img src="images/Navigation/groups.png" class="icon" />
+          Groups
+        </a>
+        <a href="Friends.html" class="nav-item">
+          <img src="images/Navigation/friends.png" class="icon" />
+          Friends
+        </a>
+        <a href="Settings.html" class="nav-item">
+          <img src="images/Navigation/setting.png" class="icon" />
+          Settings
+        </a>
+      </div>
+    </div>
+
+    <script>
+      const days = document.querySelectorAll(".day");
+      const movieList = document.getElementById("movieList");
+      const searchInput = document.getElementById("searchInput");
+
+      const moviesData = {
+        Mon: [
+          {
+            title: "Snow White",
+            desc: "Classic fairy tale reimagined.",
+            views: "25M",
+            rating: "2.2/10",
+            img: "images/Home/Movies/Snow-White.jpg",
+            link: "snow-white.html", // <-- link to its detail page
+          },
+          {
+            title: "The Great Escape",
+            desc: "Action thriller with hackers.",
+            views: "18M",
+            rating: "4.5/10",
+            img: "images/Home/Movies/The-Great-Escape.jpg",
+            link: "the-great-escape.html",
+          },
+        ],
+        Tue: [
+          {
+            title: "Desert Dawn",
+            desc: "Drama set in the desert.",
+            views: "12M",
+            rating: "4.1/10",
+            img: "images/Home/Movies/Desert-Dawn.jpg",
+            link: "desert-dawn.html",
+          },
+        ],
+        // Add Wed-Sun similarly
+      };
+
+      let currentDay = "Mon";
+
+      function loadMovies(day, filter = "") {
+        movieList.innerHTML = "";
+        const movies = moviesData[day] || [];
+        movies
+          .filter((m) => m.title.toLowerCase().includes(filter.toLowerCase()))
+          .forEach((movie) => {
+            const link = document.createElement("a");
+            link.href = movie.link; // dynamic link
+            link.style.textDecoration = "none"; // remove underline
+            link.style.color = "inherit";
+
+            const card = document.createElement("div");
+            card.classList.add("movie-card");
+            card.innerHTML = `
+        <div class="movie-poster"><img src="${movie.img}" /></div>
+        <div class="movie-details">
+          <h3>${movie.title}</h3>
+          <p>${movie.desc}</p>
+          <div class="stats">Views: ${movie.views} ★ ${movie.rating}</div>
+        </div>
+      `;
+
+            link.appendChild(card);
+            movieList.appendChild(link);
+          });
+      }
+
+      days.forEach((dayEl) => {
+        dayEl.addEventListener("click", () => {
+          days.forEach((d) => d.classList.remove("active"));
+          dayEl.classList.add("active");
+          currentDay = dayEl.dataset.day;
+          loadMovies(currentDay, searchInput.value);
+        });
+      });
+
+      searchInput.addEventListener("input", () => {
+        loadMovies(currentDay, searchInput.value);
+      });
+
+      // Initial load
+      loadMovies(currentDay);
+      // Load logged-in user's name
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      if (!loggedInUser) {
+        window.location.href = "Login.html";
+      } else {
+        // Load username
+        const usernameEl = document.getElementById("username");
+        if (usernameEl) {
+          usernameEl.textContent = loggedInUser.fullName;
+        }
+
+        // Load profile picture
+        const userIcon = document.getElementById("userIcon");
+        if (userIcon && loggedInUser.pfp) {
+          userIcon.style.backgroundImage = `url(${loggedInUser.pfp})`;
+          userIcon.style.backgroundSize = "cover";
+          userIcon.style.backgroundPosition = "center";
+        }
+      }
+    </script>
+  </body>
+</html>

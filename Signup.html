@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Movies Ahoy! Sign Up</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/Signup.css">
+</head>
+<body>
+<div class="iphone-screen">
+  <div class="app-title">Sign Up<br />Movies Ahoy!</div>
+
+  <form class="signup-form" id="signupForm">
+    <input type="text" placeholder="Full Name" class="input-field" required />
+    <input type="email" placeholder="Email" class="input-field" required />
+    <input type="password" placeholder="Password" class="input-field" required />
+    <input type="password" placeholder="Confirm Password" class="input-field" required />
+    <button type="submit" class="sign-up-button">Sign Up</button>
+  </form>
+
+  <div class="aux-links">
+    <a href="Login.html">Already have an account?</a>
+  </div>
+</div>
+
+<script>
+  async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+  document.getElementById("signupForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const fullName = this.querySelector('input[type="text"]').value;
+    const email = this.querySelector('input[type="email"]').value;
+    const password = this.querySelectorAll('input[type="password"]')[0].value;
+    const confirmPassword = this.querySelectorAll('input[type="password"]')[1].value;
+
+    if(password !== confirmPassword){
+      alert("Passwords do not match!");
+      return;
+    }
+
+    // Try server signup first (optional server). If server not running, fallback to localStorage.
+    try {
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullName, email, password })
+      });
+      if (res.ok) {
+        alert('Sign up successful (saved to users.csv)');
+        window.location.href = 'Login.html';
+        return;
+      } else {
+        const err = await res.json().catch(()=>({}));
+        if (res.status === 409) {
+          alert(err.error || 'Email already registered');
+          return;
+        }
+        console.warn('Server signup failed, falling back to local storage', err);
+      }
+    } catch (e) {
+      // server not running
+      console.warn('Server not available, saving locally');
+    }
+
+    // Fallback: save locally (works with Live Server only)
+    const hashedPassword = await hashPassword(password);
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    if(users.some(u => u.email === email)){
+      alert('This email is already registered (local)');
+      return;
+    }
+    users.push({ fullName, email, password: hashedPassword });
+    localStorage.setItem('users', JSON.stringify(users));
+    alert('Sign up saved locally (no server)');
+    window.location.href = 'Login.html';
+  });
+</script>
+</body>
+</html>

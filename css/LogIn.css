@@ -1,0 +1,94 @@
+/* =========================================================
+   LogIn.css – Pirate-Themed Login Page
+   ========================================================= */
+
+.iphone-screen {
+  padding: 50px 25px;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-title {
+  font-family: 'Georgia', serif;
+  font-size: 2.8em;
+  color: var(--pirate-gold);
+  margin-bottom: 50px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.input-field {
+  margin-bottom: 18px;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.log-in-button {
+  background: linear-gradient(180deg, var(--pirate-crimson) 0%, var(--pirate-maroon) 100%);
+  color: var(--pirate-sand);
+  padding: 14px 40px;
+  border: 2px solid var(--pirate-gold);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1em;
+  font-family: 'Georgia', serif;
+  margin-top: 10px;
+  margin-bottom: 35px;
+  transition: var(--transition-bounce);
+  box-shadow: var(--shadow-soft);
+  letter-spacing: 1px;
+}
+
+.log-in-button:hover {
+  background: linear-gradient(180deg, var(--pirate-gold) 0%, var(--pirate-dark-gold) 100%);
+  color: var(--pirate-maroon);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--glow-gold);
+}
+
+.aux-links {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 60px;
+  font-size: 1em;
+  color: var(--pirate-maroon);
+}
+
+.aux-links a {
+  color: var(--pirate-maroon);
+  text-decoration: none;
+  font-weight: bold;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.aux-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--pirate-gold);
+  transition: var(--transition-smooth);
+}
+
+.aux-links a:hover {
+  color: var(--pirate-gold);
+}
+
+.aux-links a:hover::after {
+  width: 100%;
+}

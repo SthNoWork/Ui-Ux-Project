@@ -1,0 +1,37 @@
+/* =========================================================
+   skeleton.css – Pirate-Themed Template/Skeleton Page
+   Use as a starting point for new pages
+   ========================================================= */
+
+/* This file uses common.css for base styling.
+   Add page-specific styles below as needed. */
+
+/* Page-specific content area */
+.content-area {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  padding-bottom: 80px;
+}
+
+/* Placeholder styles for new page development */
+.placeholder-section {
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 230, 200, 0.8) 100%);
+  border: 2px solid var(--pirate-wood);
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  color: var(--text-primary);
+  font-family: 'Georgia', serif;
+}
+
+.placeholder-section h2 {
+  color: var(--pirate-maroon);
+  margin-bottom: 10px;
+}
+
+.placeholder-section p {
+  color: var(--text-secondary);
+}

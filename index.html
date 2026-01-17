@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Movies Ahoy! Login</title>
+<link rel="stylesheet" href="css/LogIn.css">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+<div class="iphone-screen">
+  <div class="app-title">Movies<br>Ahoy!</div>
+
+  <form class="login-form" id="loginForm">
+    <input type="email" placeholder="Email" class="input-field" required />
+    <input type="password" placeholder="Password" class="input-field" required />
+    <button type="submit" class="log-in-button">Log In</button>
+  </form>
+
+  <div class="aux-links">
+    <a href="Signup.html">Sign up</a>
+    <a href="#">Help?</a>
+  </div>
+</div>
+
+<script>
+  (function(){
+    const form = document.getElementById('loginForm');
+    const btn = form.querySelector('button[type="submit"]');
+    function goHome(e){
+      localStorage.setItem('loggedInUser', JSON.stringify({ fullName: 'Guest', email: '' }));
+      window.location.href = 'Home.html';
+    }
+    form.addEventListener('submit', goHome);
+    btn.addEventListener('click', goHome);
+    btn.addEventListener('touchstart', function(){}, {passive:true});
+  })();
+</script>
+</body>
+</html>

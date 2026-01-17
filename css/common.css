@@ -1,0 +1,394 @@
+/* =========================================================
+   common.css – Pirate-Themed Global Styles
+   "Movies Ahoy!" – Smooth, nautical, treasure-worthy UI
+   ========================================================= */
+
+/* CSS Variables for consistent theming */
+:root {
+  /* Pirate color palette */
+  --pirate-gold: #d4a017;
+  --pirate-dark-gold: #b8860b;
+  --pirate-crimson: #8b0000;
+  --pirate-maroon: #6b1c1c;
+  --pirate-navy: #1a1a2e;
+  --pirate-ocean: #16213e;
+  --pirate-teal: #0f3460;
+  --pirate-sand: #f5e6c8;
+  --pirate-parchment: #fdf5e6;
+  --pirate-wood: #5c4033;
+  --pirate-wood-light: #8b6914;
+  --pirate-black: #0d0d0d;
+  
+  /* Functional colors */
+  --text-primary: #2c1810;
+  --text-secondary: #5c4033;
+  --text-light: #f5e6c8;
+  --accent-green: #2e7d32;
+  --accent-red: #c62828;
+  
+  /* Shadows & effects */
+  --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.3);
+  --shadow-hard: 0 6px 20px rgba(0, 0, 0, 0.5);
+  --glow-gold: 0 0 15px rgba(212, 160, 23, 0.4);
+  
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(135deg, var(--pirate-navy) 0%, var(--pirate-ocean) 50%, var(--pirate-teal) 100%);
+  background-attachment: fixed;
+}
+
+/* iPhone Screen Container */
+.iphone-screen {
+  width: 375px;
+  height: 812px;
+  margin: 20px auto;
+  background: linear-gradient(180deg, var(--pirate-parchment) 0%, var(--pirate-sand) 100%);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: 40px;
+  box-shadow: 
+    var(--shadow-hard),
+    inset 0 0 60px rgba(92, 64, 51, 0.1),
+    0 0 0 3px var(--pirate-wood),
+    0 0 0 6px var(--pirate-dark-gold);
+}
+
+/* =====================
+   HEADER
+   ===================== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px 14px;
+  background: linear-gradient(180deg, var(--pirate-maroon) 0%, var(--pirate-crimson) 100%);
+  border-bottom: 3px solid var(--pirate-gold);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--pirate-gold), transparent);
+}
+
+.header-title {
+  font-family: 'Georgia', serif;
+  font-size: 1.6em;
+  color: var(--pirate-gold);
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95em;
+  font-weight: bold;
+  color: var(--pirate-sand);
+}
+
+.user-profile #username {
+  font-size: 0.9rem;
+  color: var(--pirate-sand);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.user-icon {
+  width: 36px;
+  height: 36px;
+  background-color: var(--pirate-wood);
+  border-radius: 50%;
+  border: 2px solid var(--pirate-gold);
+  background-size: cover;
+  background-position: center;
+  display: inline-block;
+  box-shadow: var(--glow-gold);
+  transition: var(--transition-smooth);
+}
+
+.user-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.6);
+}
+
+/* =====================
+   NAVIGATION BAR
+   ===================== */
+.navigation-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px;
+  background: linear-gradient(180deg, var(--pirate-wood) 0%, var(--pirate-black) 100%);
+  border-top: 3px solid var(--pirate-gold);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+.navigation-bar .nav-item {
+  text-decoration: none;
+  font-size: 0.7em;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--pirate-sand);
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.navigation-bar .nav-item::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 30px;
+  height: 2px;
+  background: var(--pirate-gold);
+  transition: var(--transition-smooth);
+}
+
+.navigation-bar .nav-item:hover {
+  color: var(--pirate-gold);
+  transform: translateY(-3px);
+}
+
+.navigation-bar .nav-item:hover::before {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.navigation-bar .nav-item .icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  filter: brightness(0) invert(0.9);
+  transition: var(--transition-smooth);
+}
+
+.navigation-bar .nav-item:hover .icon {
+  filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(10deg);
+  transform: scale(1.15);
+}
+
+/* =====================
+   BUTTONS (Global)
+   ===================== */
+.btn {
+  padding: 12px 24px;
+  background: linear-gradient(180deg, var(--pirate-crimson) 0%, var(--pirate-maroon) 100%);
+  color: var(--pirate-sand);
+  border: 2px solid var(--pirate-gold);
+  border-radius: 8px;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: var(--transition-bounce);
+  box-shadow: var(--shadow-soft);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn:hover {
+  background: linear-gradient(180deg, var(--pirate-gold) 0%, var(--pirate-dark-gold) 100%);
+  color: var(--pirate-maroon);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--glow-gold);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* =====================
+   INPUT FIELDS (Global)
+   ===================== */
+.input-field,
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1em;
+  font-family: 'Georgia', serif;
+  border: 2px solid var(--pirate-wood);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition-smooth);
+  box-sizing: border-box;
+}
+
+.input-field:focus,
+.search-input:focus {
+  border-color: var(--pirate-gold);
+  box-shadow: var(--glow-gold);
+  background: white;
+}
+
+.input-field::placeholder,
+.search-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+/* =====================
+   CARDS (Global)
+   ===================== */
+.movie-card,
+.group-card,
+.friend-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 230, 200, 0.9) 100%);
+  border: 2px solid var(--pirate-wood);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.movie-card::before,
+.group-card::before,
+.friend-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.1), transparent);
+  transition: var(--transition-smooth);
+}
+
+.movie-card:hover,
+.group-card:hover,
+.friend-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--pirate-gold);
+  box-shadow: var(--glow-gold), var(--shadow-hard);
+}
+
+.movie-card:hover::before,
+.group-card:hover::before,
+.friend-card:hover::before {
+  left: 100%;
+}
+
+/* =====================
+   SCROLLBAR STYLING
+   ===================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--pirate-sand);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--pirate-wood) 0%, var(--pirate-maroon) 100%);
+  border-radius: 4px;
+  border: 1px solid var(--pirate-gold);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pirate-gold);
+}
+
+/* =====================
+   ANIMATIONS
+   ===================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 5px var(--pirate-gold); }
+  50% { box-shadow: 0 0 20px var(--pirate-gold); }
+}
+
+/* Utility Classes */
+.animate-fade-in {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.gold-glow {
+  animation: pulse-gold 2s infinite;
+}
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+@media (max-width: 420px) {
+  .iphone-screen {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  .navigation-bar {
+    border-radius: 0;
+  }
+}
+
+/* Make images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

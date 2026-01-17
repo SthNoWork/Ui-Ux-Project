@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Detail — Desert Dawn</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/EachMovie.css">
+  </head>
+  <body>
+    <div class="iphone-screen">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-title">Movies Ahoy!</div>
+        <div class="user-profile">
+          <span id="username">Username</span>
+          <span class="user-icon" id="userIcon"></span>
+        </div>
+      </div>
+
+      <!-- SCROLLABLE CONTENT -->
+      <div class="content">
+        <!-- POSTER -->
+        <div class="poster-container">
+          <img
+            src="images/Home/Movies/Desert-Dawn.jpg"
+            alt="Desert Dawn Poster"
+          />
+        </div>
+
+        <!-- MOVIE INFO -->
+        <div class="movie-title">Desert Dawn</div>
+        <div class="movie-genres">
+          <span class="genre-box">Drama</span>
+          <span class="genre-box">Adventure</span>
+          <span class="genre-box">Thriller</span>
+        </div>
+        <div class="movie-stats">
+          <div>PG 13</div>
+          <div>★ 4.1/10</div>
+          <div>1h 55m</div>
+          <div>12M views</div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="description">
+          "A tense survival drama set across an unforgiving desert, following
+          a group of strangers whose paths collide as they race to safety."
+        </div>
+
+        <!-- FRIENDS WHO WATCHED (DYNAMIC) -->
+        <div id="friendsWatchedContainer" class="friends-watched"></div>
+
+        <!-- CINEMAS / DAY SCHEDULE -->
+        <div class="day-schedule">
+          <!-- Cinema 1 -->
+          <div class="cinema">
+            <div class="cinema-name">Big Cinema Name</div>
+            <!-- Location 1 -->
+            <div class="location">
+              <div class="location-header">
+                <span class="location-name">Location 1</span>
+                <a href="Friends.html" class="location-link">Link</a>
+              </div>
+              <div class="hall">
+                <div class="hall-name">Hall 1:</div>
+                <div class="hall-type-box">2D</div>
+                <div class="hall-type-box">ENG</div>
+                <div class="hall-type-box">CC</div>
+                <div class="hall-type-box">KH</div>
+                <div class="showtimes">
+                  <div class="showtime-box">1:30PM</div>
+                  <div class="showtime-box">4:30PM</div>
+                </div>
+              </div>
+            </div>
+            <!-- Location 2 -->
+            <div class="location">
+              <div class="location-header">
+                <span class="location-name">Location 2</span>
+                <a href="Friends.html" class="location-link">Link</a>
+              </div>
+              <div class="hall">
+                <div class="hall-name">Hall 1:</div>
+                <div class="hall-type-box">2D</div>
+                <div class="hall-type-box">ENG</div>
+                <div class="hall-type-box">CC</div>
+                <div class="hall-type-box">KH</div>
+                <div class="showtimes">
+                  <div class="showtime-box">2:00PM</div>
+                  <div class="showtime-box">5:00PM</div>
+                </div>
+              </div>
+              <div class="hall">
+                <div class="hall-name">Hall 2:</div>
+                <div class="hall-type-box">3D</div>
+                <div class="hall-type-box">ENG</div>
+                <div class="hall-type-box">CC</div>
+                <div class="hall-type-box">KH</div>
+                <div class="showtimes">
+                  <div class="showtime-box">3:00PM</div>
+                  <div class="showtime-box">6:00PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cinema 2 -->
+          <div class="cinema">
+            <div class="cinema-name">Mega Cinema</div>
+            <div class="location">
+              <div class="location-header">
+                <span class="location-name">Location 1</span>
+                <a href="Friends.html" class="location-link">Link</a>
+              </div>
+              <div class="hall">
+                <div class="hall-name">Hall 1:</div>
+                <div class="hall-type-box">2D</div>
+                <div class="hall-type-box">ENG</div>
+                <div class="hall-type-box">CC</div>
+                <div class="hall-type-box">KH</div>
+                <div class="showtimes">
+                  <div class="showtime-box">12:30PM</div>
+                  <div class="showtime-box">3:30PM</div>
+                </div>
+              </div>
+              <div class="hall">
+                <div class="hall-name">Hall 2:</div>
+                <div class="hall-type-box">3D</div>
+                <div class="hall-type-box">ENG</div>
+                <div class="hall-type-box">CC</div>
+                <div class="hall-type-box">KH</div>
+                <div class="showtimes">
+                  <div class="showtime-box">2:30PM</div>
+                  <div class="showtime-box">5:30PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVIGATION BAR -->
+      <div class="navigation-bar">
+        <a href="Home.html" class="nav-item">
+          <img src="images/Navigation/home.png" class="icon" alt="Home" />
+          Home
+        </a>
+        <a href="Movies.html" class="nav-item">
+          <img src="images/Navigation/movies.png" class="icon" alt="Movies" />
+          Movies
+        </a>
+        <a href="Groups.html" class="nav-item">
+          <img src="images/Navigation/groups.png" class="icon" alt="Groups" />
+          Groups
+        </a>
+        <a href="Friends.html" class="nav-item">
+          <img src="images/Navigation/friends.png" class="icon" alt="Friends" />
+          Friends
+        </a>
+        <a href="Settings.html" class="nav-item">
+          <img src="images/Navigation/setting.png" class="icon" alt="Settings" />
+          Settings
+        </a>
+      </div>
+    </div>
+
+    <script>
+      const currentMovie = "Desert Dawn";
+
+      const friendsData = [
+        {
+          username: "Alice",
+          movies: ["Inception", "Titanic", "Desert Dawn", "Avatar"],
+          avatar: "images/Avatars/alice.jpg",
+        },
+        {
+          username: "Bob",
+          movies: ["The Matrix", "Desert Dawn"],
+          avatar: "images/Avatars/bob.jpg",
+        },
+        {
+          username: "Charlie",
+          movies: ["It", "The Shining", "Get Out"],
+          avatar: "images/Avatars/charlie.jpg",
+        },
+        {
+          username: "Evelyn",
+          movies: ["Se7en", "Gone Girl", "Shutter Island"],
+          avatar: "images/Avatars/evelyn.jpg",
+        },
+      ];
+
+      // FRIENDS WHO WATCHED
+      const friendsContainer = document.getElementById(
+        "friendsWatchedContainer"
+      );
+
+      const friendsWhoWatched = friendsData.filter((friend) =>
+        friend.movies.includes(currentMovie)
+      );
+
+      friendsWhoWatched.slice(0, 3).forEach((friend) => {
+        const img = document.createElement("img");
+        img.src = friend.avatar;
+        img.title = friend.username;
+        friendsContainer.appendChild(img);
+      });
+
+      if (friendsWhoWatched.length > 3) {
+        const moreSpan = document.createElement("span");
+        moreSpan.textContent = `+${friendsWhoWatched.length - 3} more`;
+        friendsContainer.appendChild(moreSpan);
+      }
+
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      if (!loggedInUser) {
+        window.location.href = "Login.html";
+      } else {
+        // Load username
+        const usernameEl = document.getElementById("username");
+        if (usernameEl) {
+          usernameEl.textContent = loggedInUser.fullName;
+        }
+
+        // Load profile picture
+        const userIcon = document.getElementById("userIcon");
+        if (userIcon && loggedInUser.pfp) {
+          userIcon.style.backgroundImage = `url(${loggedInUser.pfp})`;
+          userIcon.style.backgroundSize = "cover";
+          userIcon.style.backgroundPosition = "center";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,204 @@
+/* =========================================================
+   EachMovie.css – Pirate-Themed Movie Detail Page
+   ========================================================= */
+
+/* SCROLLABLE CONTENT */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  box-sizing: border-box;
+  padding-bottom: 80px;
+}
+
+/* POSTER */
+.poster-container {
+  margin: 10px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 3px solid var(--pirate-gold);
+  box-shadow: var(--shadow-hard);
+}
+
+.poster-container img {
+  width: 100%;
+  transition: var(--transition-smooth);
+}
+
+.poster-container:hover img {
+  transform: scale(1.02);
+}
+
+/* MOVIE INFO */
+.movie-title {
+  font-size: 1.6em;
+  font-weight: bold;
+  margin: 12px 0 8px;
+  color: var(--pirate-maroon);
+  font-family: 'Georgia', serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.movie-genres {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.genre-box {
+  background: linear-gradient(180deg, var(--pirate-gold) 0%, var(--pirate-dark-gold) 100%);
+  color: var(--pirate-maroon);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.85em;
+  border: 1px solid var(--pirate-wood);
+  box-shadow: var(--shadow-soft);
+}
+
+/* MOVIE STATS */
+.movie-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  border: 1px solid var(--pirate-wood);
+}
+
+/* DESCRIPTION */
+.description {
+  font-size: 0.9em;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  border-left: 4px solid var(--pirate-gold);
+}
+
+/* FRIENDS WHO WATCHED */
+.friends-watched {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 12px;
+  padding: 10px;
+  background: rgba(212, 160, 23, 0.1);
+  border-radius: 10px;
+}
+
+.friends-watched img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid var(--pirate-gold);
+  box-shadow: var(--glow-gold);
+}
+
+/* CINEMAS / DAY SCHEDULE */
+.day-schedule {
+  margin-bottom: 25px;
+}
+
+.cinema {
+  margin-bottom: 18px;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 230, 200, 0.8) 100%);
+  border: 2px solid var(--pirate-wood);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+.cinema-name {
+  font-weight: bold;
+  font-size: 1.15em;
+  margin-bottom: 8px;
+  color: var(--pirate-maroon);
+  font-family: 'Georgia', serif;
+}
+
+.location {
+  padding-left: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-left: 3px solid var(--pirate-gold);
+}
+
+.location-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.location-name {
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.location-link {
+  text-decoration: none;
+  color: var(--pirate-gold);
+  font-size: 0.85em;
+  font-weight: bold;
+  transition: var(--transition-smooth);
+}
+
+.location-link:hover {
+  text-decoration: underline;
+}
+
+/* HALLS */
+.hall {
+  margin-bottom: 14px;
+}
+
+.hall-name {
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.hall-type-box,
+.showtime-box {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 6px;
+  margin-right: 6px;
+  margin-bottom: 4px;
+  font-size: 0.85em;
+  color: white;
+  font-weight: bold;
+}
+
+.hall-type-box {
+  background: linear-gradient(180deg, #1976d2 0%, #0d47a1 100%);
+  border: 1px solid #1565c0;
+}
+
+.showtime-box {
+  background: linear-gradient(180deg, var(--pirate-gold) 0%, var(--pirate-dark-gold) 100%);
+  color: var(--pirate-maroon);
+  border: 1px solid var(--pirate-wood);
+  cursor: pointer;
+  transition: var(--transition-bounce);
+}
+
+.showtime-box:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--glow-gold);
+}
+
+.showtimes {
+  margin-top: 6px;
+}

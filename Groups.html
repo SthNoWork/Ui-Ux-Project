@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Groups - Movies Ahoy!</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/Groups.css">
+  </head>
+  <body>
+    <div class="iphone-screen">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-title">Movies Ahoy!</div>
+        <div class="user-profile">
+          <span id="username">Username</span>
+          <span class="user-icon" id="userIcon"></span>
+        </div>
+      </div>
+
+      <!-- SEARCH BAR -->
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          placeholder="Search groups..."
+        />
+      </div>
+
+      <!-- GROUP LIST -->
+      <div class="group-list" id="groupList"></div>
+
+      <!-- NAVIGATION BAR -->
+      <div class="navigation-bar">
+        <a href="Home.html" class="nav-item">
+          <img src="images/Navigation/home.png" class="icon" />
+          Home
+        </a>
+        <a href="Movies.html" class="nav-item">
+          <img src="images/Navigation/movies.png" class="icon" />
+          Movies
+        </a>
+        <a href="Groups.html" class="nav-item">
+          <img src="images/Navigation/groups.png" class="icon" />
+          Groups
+        </a>
+        <a href="Friends.html" class="nav-item">
+          <img src="images/Navigation/friends.png" class="icon" />
+          Friends
+        </a>
+        <a href="Settings.html" class="nav-item">
+          <img src="images/Navigation/setting.png" class="icon" />
+          Settings
+        </a>
+      </div>
+    </div>
+
+    <script>
+      const groupList = document.getElementById("groupList");
+      const searchInput = document.getElementById("searchInput");
+
+      const groupsData = [
+        {
+          name: "The Gang",
+          status: '"My little Pony" in session',
+          icon: "images/Groups/Group1.jpg",
+          page: "The-Gang.html",
+        },
+        {
+          name: "Action Fans",
+          status: '"The Matrix" join?',
+          icon: "images/Groups/Group2.jpg",
+          page: "Action-Fans.html",
+        },
+        {
+          name: "Drama Club",
+          status: '"Titanic" ended',
+          icon: "images/Groups/Group3.jpg",
+          page: "Drama-Club.html",
+        },
+      ];
+
+      function getStatusColor(status) {
+        if (status.includes("in session")) return "orange";
+        if (status.includes("join?")) return "green";
+        if (status.includes("ended")) return "red";
+        return "gray";
+      }
+
+      function loadGroups(filter = "") {
+        groupList.innerHTML = "";
+        groupsData
+          .filter((g) => g.name.toLowerCase().includes(filter.toLowerCase()))
+          .forEach((group) => {
+            const card = document.createElement("div");
+            card.classList.add("group-card");
+
+            // Click to go to group's HTML page
+            card.addEventListener("click", () => {
+              window.location.href = group.page;
+            });
+
+            const color = getStatusColor(group.status);
+            card.innerHTML = `
+              <div class="group-icon"><img src="${group.icon}" /></div>
+              <div class="group-info">
+                <div class="group-name">${group.name}</div>
+                <div class="group-status">
+                  <span class="status-indicator" style="background-color: ${color};"></span>
+                  ${group.status}
+                </div>
+              </div>
+            `;
+            groupList.appendChild(card);
+          });
+      }
+
+      searchInput.addEventListener("input", () =>
+        loadGroups(searchInput.value)
+      );
+      loadGroups(); // Initial load
+      // Load logged-in user's name
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      if (!loggedInUser) {
+        window.location.href = "Login.html";
+      } else {
+        // Load username
+        const usernameEl = document.getElementById("username");
+        if (usernameEl) {
+          usernameEl.textContent = loggedInUser.fullName;
+        }
+
+        // Load profile picture
+        const userIcon = document.getElementById("userIcon");
+        if (userIcon && loggedInUser.pfp) {
+          userIcon.style.backgroundImage = `url(${loggedInUser.pfp})`;
+          userIcon.style.backgroundSize = "cover";
+          userIcon.style.backgroundPosition = "center";
+        }
+      }
+    </script>
+  </body>
+</html>
