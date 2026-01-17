@@ -9,7 +9,6 @@
 </head>
 <body>
   <div class="iphone-screen">
-    <!-- HEADER -->
     <div class="header">
       <div class="header-title">Movies Ahoy!</div>
       <div class="user-profile">
@@ -26,7 +25,6 @@
 
         <label class="input-label" for="pfpUpload">Change Profile Picture</label>
         <input type="file" id="pfpUpload" accept="image/*" class="input-field" />
-
         <button id="savePfp" class="btn">Save Picture</button>
       </div>
 
@@ -34,11 +32,16 @@
         <label class="input-label" for="changePassword">Change Password</label>
         <input type="password" id="changePassword" class="input-field" placeholder="New Password" />
 
+        <div class="payment-section">
+          <h3 class="section-title">Payment Methods</h3>
+          <div id="paymentMethodsList"></div>
+          <button id="addPaymentBtn" class="btn">Add Payment Method</button>
+        </div>
+
         <button id="logoutBtn" class="btn">Logout</button>
       </div>
     </div>
 
-    <!-- NAVIGATION BAR -->
     <div class="navigation-bar">
       <a href="Home.html" class="nav-item">
         <img src="images/Navigation/home.png" class="icon" />
@@ -61,24 +64,58 @@
         Settings
       </a>
     </div>
+
+    <div class="payment-modal-overlay" id="paymentModal">
+      <div class="payment-modal">
+        <h3>Add Payment Method</h3>
+        
+        <label class="input-label">Payment Type</label>
+        <select id="paymentType" class="input-field">
+          <option value="">— Select Type —</option>
+          <option value="credit">Credit Card</option>
+          <option value="debit">Debit Card</option>
+          <option value="paypal">PayPal</option>
+          <option value="ewallet">E-Wallet</option>
+        </select>
+
+        <label class="input-label" for="cardholderName">Cardholder Name</label>
+        <input type="text" id="cardholderName" class="input-field" placeholder="John Doe" />
+
+        <label class="input-label" for="cardNumber">Card Number</label>
+        <input type="text" id="cardNumber" class="input-field" placeholder="1234 5678 9012 3456" maxlength="19" />
+
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 1;">
+            <label class="input-label" for="expiryDate">Expiry Date</label>
+            <input type="text" id="expiryDate" class="input-field" placeholder="MM/YY" maxlength="5" />
+          </div>
+          <div style="flex: 1;">
+            <label class="input-label" for="cvv">CVV</label>
+            <input type="text" id="cvv" class="input-field" placeholder="123" maxlength="4" />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn cancel" id="cancelPayment">Cancel</button>
+          <button class="btn create" id="savePayment">Save</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Load logged-in user info
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser) {
       window.location.href = "Login.html";
     } else {
-      // page content fields
       document.getElementById('userName').textContent = loggedInUser.fullName;
       document.getElementById('userEmail').textContent = loggedInUser.email;
       if (loggedInUser.pfp) {
         document.getElementById('pfpImg').src = loggedInUser.pfp;
       } else {
-        document.getElementById('pfpImg').src = ""; // default blank PFP
+        document.getElementById('pfpImg').src = "";
       }
 
-      // header: keep consistent with Home.html
       const headerUsername = document.getElementById('username');
       if (headerUsername) headerUsername.textContent = loggedInUser.fullName;
 
@@ -90,7 +127,6 @@
       }
     }
 
-    // Save PFP to localStorage
     const pfpUpload = document.getElementById('pfpUpload');
     const savePfp = document.getElementById('savePfp');
 
@@ -110,7 +146,6 @@
       loggedInUser.pfp = imgSrc;
       localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
 
-      // update header icon immediately
       const headerUserIcon = document.getElementById('userIcon');
       if (headerUserIcon) {
         headerUserIcon.style.backgroundImage = `url(${imgSrc})`;
@@ -121,10 +156,151 @@
       alert("Profile picture saved!");
     });
 
-    // Logout
     document.getElementById('logoutBtn').addEventListener('click', () => {
       localStorage.removeItem('loggedInUser');
       window.location.href = "Login.html";
+    });
+
+    if (!loggedInUser.paymentMethods) {
+      loggedInUser.paymentMethods = [];
+    }
+
+    function renderPaymentMethods() {
+      const container = document.getElementById('paymentMethodsList');
+      container.innerHTML = '';
+
+      if (loggedInUser.paymentMethods.length === 0) {
+        container.innerHTML = '<p class="no-payments">No payment methods added</p>';
+        return;
+      }
+
+      loggedInUser.paymentMethods.forEach((payment, index) => {
+        const paymentCard = document.createElement('div');
+        paymentCard.className = 'payment-card';
+        
+        const typeEmoji = {
+          'credit': '💳',
+          'debit': '💳',
+          'paypal': '🅿️',
+          'ewallet': '💰'
+        };
+
+        const maskedCard = payment.cardNumber.slice(-4);
+        
+        paymentCard.innerHTML = `
+          <div class="payment-info">
+            <div class="payment-type">${typeEmoji[payment.type] || '💳'} ${payment.type.toUpperCase()}</div>
+            <div class="payment-details">
+              <strong>${payment.cardholderName}</strong><br>
+              •••• •••• •••• ${maskedCard}<br>
+              Expires: ${payment.expiryDate}
+            </div>
+          </div>
+          <button class="delete-payment-btn" data-index="${index}">🗑️</button>
+        `;
+        
+        container.appendChild(paymentCard);
+      });
+
+      document.querySelectorAll('.delete-payment-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = parseInt(e.target.dataset.index);
+          if (confirm('Remove this payment method?')) {
+            loggedInUser.paymentMethods.splice(index, 1);
+            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+            renderPaymentMethods();
+          }
+        });
+      });
+    }
+
+    renderPaymentMethods();
+
+    const paymentModal = document.getElementById('paymentModal');
+    const addPaymentBtn = document.getElementById('addPaymentBtn');
+    const cancelPayment = document.getElementById('cancelPayment');
+    const savePayment = document.getElementById('savePayment');
+    const cardNumberInput = document.getElementById('cardNumber');
+    const expiryDateInput = document.getElementById('expiryDate');
+    const cvvInput = document.getElementById('cvv');
+
+    cardNumberInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\s/g, '');
+      let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formatted;
+    });
+
+    expiryDateInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+      }
+      e.target.value = value;
+    });
+
+    cvvInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '');
+    });
+
+    addPaymentBtn.addEventListener('click', () => {
+      paymentModal.style.display = 'flex';
+    });
+
+    cancelPayment.addEventListener('click', () => {
+      paymentModal.style.display = 'none';
+      document.getElementById('paymentType').value = '';
+      document.getElementById('cardholderName').value = '';
+      document.getElementById('cardNumber').value = '';
+      document.getElementById('expiryDate').value = '';
+      document.getElementById('cvv').value = '';
+    });
+
+    savePayment.addEventListener('click', () => {
+      const type = document.getElementById('paymentType').value;
+      const cardholderName = document.getElementById('cardholderName').value;
+      const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+      const expiryDate = document.getElementById('expiryDate').value;
+      const cvv = document.getElementById('cvv').value;
+
+      if (!type || !cardholderName || !cardNumber || !expiryDate || !cvv) {
+        alert('Please fill in all fields');
+        return;
+      }
+
+      if (cardNumber.length < 13) {
+        alert('Invalid card number');
+        return;
+      }
+
+      if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
+        alert('Invalid expiry date (MM/YY)');
+        return;
+      }
+
+      if (cvv.length < 3) {
+        alert('Invalid CVV');
+        return;
+      }
+
+      loggedInUser.paymentMethods.push({
+        type,
+        cardholderName,
+        cardNumber,
+        expiryDate,
+        cvv
+      });
+
+      localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+      renderPaymentMethods();
+      paymentModal.style.display = 'none';
+
+      document.getElementById('paymentType').value = '';
+      document.getElementById('cardholderName').value = '';
+      document.getElementById('cardNumber').value = '';
+      document.getElementById('expiryDate').value = '';
+      document.getElementById('cvv').value = '';
+
+      alert('Payment method added successfully!');
     });
   </script>
 </body>
